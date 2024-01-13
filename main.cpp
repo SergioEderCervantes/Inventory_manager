@@ -10,12 +10,129 @@ const char* negocio = "assets/infoNeg.txt";
 const char* inventario = "assets/inventario.txt";
 const char* paquetes = "assets/paquetes.txt";
 const char* auxiliar = "assets/auxiliar.txt";
+
+char menu();
+
+//funciones para inventario
+void menuInventario();
+void mostrarInventario();
+// void modificarInventarioEntrada();
+// void modificarInventarioSalida();
+
+
+//Funciones para paquetes
+void menuPaquetes();
 void registrarNuevoPaquete();
+// void eliminarPaquete();
+// void verBaseDePaquetes();
 
 int main()
 {
-    registrarNuevoPaquete();
+    //Bienvenida
+    char opc;
+
+    do
+    {
+        opc = menu();
+        switch (opc)
+        {
+        case '1':
+            menuPaquetes();
+            break;
+        case '2':
+            menuInventario();
+            break;
+        case '3':
+            mostrarInventario();
+            break;
+        case '0':
+            cout << endl << "Vuelva pronto";
+            break;
+        default:
+            cout << endl << "Opcion incorrecta, intente de nuevo";
+            break;
+        }
+    } while (opc != '0');
+    
     return 0;
+}
+
+char menu()
+{
+    char opcion;
+    cout << "Menú principal:" << endl;
+    cout << "1. Modificar base de paquetes" << endl;
+    cout << "2. Modificar inventario" << endl;
+    cout << "3. Revisar inventario" << endl;
+    cout << "0. Salir" << endl;
+    cout << "Seleccione una opción: ";
+    cin >> opcion;
+
+    return opcion;
+}
+
+void menuPaquetes()
+{
+    char opcion;
+
+    do {
+        cout << "\nMenú de paquetes:" << endl;
+        cout << "1. Agregar Paquete" << endl;
+        cout << "2. Eliminar Paquete" << endl;
+        cout << "3. Ver Base de Paquetes" << endl;
+        cout << "0. Salir al menu principal" << endl;
+        cout << "Seleccione una opción: ";
+        cin >> opcion;
+
+        switch (opcion) {
+            case '1':
+                registrarNuevoPaquete();
+                break;
+            case '2':
+                // eliminarPaquete();
+                break;
+            case '3':
+                // verBaseDePaquetes();
+                break;
+            case '0':
+                cout << "Saliendo del programa." << endl;
+                break;
+            default:
+                cout << "Opción no válida. Inténtelo de nuevo." << endl;
+        }
+    } while (opcion != '0');
+}
+
+void menuInventario()
+{
+    char opcion;
+
+    do {
+        cout << "\nMenú Modificar Inventario:" << endl;
+        cout << "1. Modificar Inventario (Entrada)" << endl;
+        cout << "2. Modificar Inventario (Salida)" << endl;
+        cout << "0. Salir al Menú Principal" << endl;
+        cout << "Seleccione una opción: ";
+        cin >> opcion;
+
+        switch (opcion) {
+            case '1':
+                // modificarInventarioEntrada();
+                break;
+            case '2':
+                // modificarInventarioSalida();
+                break;
+            case '0':
+                cout << "Volviendo al menú principal." << endl;
+                break;
+            default:
+                cout << "Opción no válida. Inténtelo de nuevo." << endl;
+        }
+    } while (opcion != '0');
+}
+void mostrarInventario()
+{
+
 }
 
 void registrarNuevoPaquete()
