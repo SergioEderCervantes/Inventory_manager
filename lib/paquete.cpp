@@ -44,11 +44,6 @@ double  Paquete ::getPrecioCompra()
     return this->precioCompra;
 }
 
-Producto* Paquete ::getProductos()
-{
-    return this->productos;
-}
-
 Paquete ::~Paquete ()
 {
     delete []productos;
@@ -68,7 +63,7 @@ void Paquete ::imprimir()
     cout << endl;
 }
 
-void Paquete ::guardarEnArch(char const* nomArch) const
+void Paquete ::guardarEnArch(const char * nomArch) const
 {
     ofstream ofile(nomArch, ios::app);
     if (!ofile)
@@ -82,4 +77,40 @@ void Paquete ::guardarEnArch(char const* nomArch) const
         ofile << productos[i].getNombre() << " " << productos[i].getCant() << " " << productos[i].getPrecioCompra() << " " << productos[i].getPrecioVenta() << endl; 
     ofile << endl;
     ofile.close();
+}
+
+void Paquete ::cargarPaquete(const string  ID,const char * paquetes)
+{
+    //Armamos la linea que se va a buscar en el archivo
+    string ID_ABuscar = "ID " + ID, line;
+    ifstream ifile(paquetes);
+    while(getline(ifile,line))
+    {
+        if (line == ID_ABuscar) //Evalua si se encontro el paquete, en ese caso se copia todo lo de el
+        {
+            this->paquete_id = stoi(ID);
+            getline(ifile,line);
+            this->nombre = line;
+            ifile >> this->numProductos >> this->precioCompra;
+            string Pnom;
+            int Pcant;
+            double PpC, PpV;
+            for (int i = 0; i < numProductos; i++)
+            {
+                ifile >> Pnom >> Pcant >> PpC >> PpV;
+                this->productos[i].setNom(Pnom);
+                this->productos[i].setCant(Pcant);
+                this->productos[i].setPrecioCompra(PpC);
+                this->productos[i].setPrecioVenta(PpV);
+            }
+            break;            
+        }
+    }
+    ifile.close();
+}
+
+bool validarNom(const Paquete& obj, const string nom)
+{
+
+    
 }

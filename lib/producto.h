@@ -11,16 +11,16 @@ private:
     double precioCompra;
     double precioVenta;
 public: 
-    Producto(); 
+    Producto();
+    Producto(string,int,double,double); 
     void setNom(string);
     void setCant(int);
     void setPrecioCompra(double);
     void setPrecioVenta(double);
-    string getNombre();
-    int getCant();
-    double getPrecioCompra();
-    double getPrecioVenta();
-    Producto stringToProducto(string);
+    string getNombre() const;
+    int getCant() const;
+    double getPrecioCompra() const;
+    double getPrecioVenta() const;
     ~Producto(){} 
 }; 
 

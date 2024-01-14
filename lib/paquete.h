@@ -9,8 +9,8 @@ private:
     string nombre;
     int numProductos;
     double precioCompra;
-    Producto *productos;
 public: 
+    Producto *productos;
     Paquete(); 
     Paquete(int, string, int, double, Producto*);
     void setNombre(string);
@@ -20,9 +20,11 @@ public:
     string getNombre();
     int getNumProductos();
     double getPrecioCompra();
-    Producto* getProductos();
+
     void imprimir();
-    void guardarEnArch(char const*) const;
+    void guardarEnArch(const char *) const;
+    void cargarPaquete(const string , const char *);
+    friend bool validarNom(const Paquete&, const string );
     ~Paquete();
 }; 
 

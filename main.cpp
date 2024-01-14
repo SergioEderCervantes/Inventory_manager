@@ -17,8 +17,8 @@ char menu();
 //funciones para inventario
 void menuInventario();
 void mostrarInventario();
-// void modificarInventarioEntrada();
-// void modificarInventarioSalida();
+vector<Producto> modificarInventarioEntrada(vector<Producto>);
+// vector<Producto> modificarInventarioSalida(vector<Producto>);
 vector<Producto> cargarInventario();
 
 
@@ -244,6 +244,11 @@ void menuInventario()
 {
     char opcion;
     vector<Producto> inventario = cargarInventario();
+    // for (const auto& producto : inventario) {
+    //     cout << producto.getNombre() << "-" << producto.getCant() << "-" << producto.getPrecioCompra() << "-" << producto.getPrecioVenta() << endl;
+    // }
+    
+    // system("pause");
     do {
         system("cls");
         cout << "\nMenu Modificar Inventario:" << endl;
@@ -255,7 +260,7 @@ void menuInventario()
 
         switch (opcion) {
             case '1':
-                // modificarInventarioEntrada();
+                inventario = modificarInventarioEntrada(inventario);
                 break;
             case '2':
                 // modificarInventarioSalida();
@@ -284,17 +289,68 @@ void mostrarInventario()
 vector<Producto> cargarInventario()
 {
     vector<Producto> inv;
-    Producto aux;
     ifstream ifile(inventario);
     ifile.clear();
     ifile.seekg(0);
-    string line;
-    while (getline(ifile,line))
+    string nom;
+    int cant;
+    double pC, pV;
+
+    while (ifile >> nom >> cant >> pC >> pV)
     {
-        aux.stringToProducto(line);
+        Producto aux(nom,cant,pC,pV);
         inv.push_back(aux);
     }
     
 
     ifile.close();
+    return inv;
+}
+
+vector<Producto> modificarInventarioEntrada(vector<Producto> inventario)
+{
+    ifstream ifile(paquetes);
+    char resp;
+    string ID;
+    Paquete aux;
+    do
+    {
+        ifile.clear();
+        ifile.seekg(0);
+        cout << endl << "Estos son los paquetes registrados para ingresar productos al inventario: ";
+        verBaseDePaquetes();
+        cout << endl << "Dame el ID del paquete que se agregara al inventario \n (Si es un nuevo producto, primero debes de agregar el paquete en la opcion de modificar paquetes)";
+        cin >> ID;
+        aux.cargarPaquete(ID, paquetes);
+        if (aux.getNombre() == "")
+            cout << endl << "El paquete no se encontro, intente de nuevo";
+
+        //logica para agregar los productos del paquete encontrado en el inventario
+        for (int i = 0; i < aux.getNumProductos(); i++)
+        {
+            bool encontrado = false;
+            for (auto& producto : inventario)
+            {
+                if (aux.productos[i].getNombre() == producto.getNombre())
+                {
+                    producto.setCant(producto.getCant() + aux.productos[i].getCant());
+                    encontrado = true;
+                }                
+            }
+            if (!encontrado) //Si el producto es nuevo, entonces se agrega al inventario como un nuevo producto
+            {
+                Producto nuevo(aux.productos[i].getNombre(),aux.productos[i].getCant(),aux.productos[i].getPrecioCompra(),aux.productos[i].getPrecioVenta());
+                inventario.push_back(nuevo);
+            }   
+        }
+        
+        cout << endl << "Si quiere agregar mas productos al inventario, pulse 's', para salir pulse 'n'";
+        cin >> resp;
+        system("cls");
+        
+    } while (resp != 'n');
+    
+
+
+    return inventario;
 }

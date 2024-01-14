@@ -2,6 +2,24 @@
 
 Producto ::Producto() : nomProd(""), cantidad(0), precioCompra(0.0), precioVenta(0.0) {}
 
+Producto ::Producto(string nom, int cant, double pC, double pV)
+{    
+    //Reemplazamos los guiones bajos por espacios en blanco
+    unsigned int pos = nom.find('_');
+    while (pos != string::npos)
+    {
+        nom.replace(pos, 1, " ");
+        pos = nom.find('_', pos + 1);
+    }
+    
+    //Asignamos los valores de los parametros a los atributos del objeto
+
+    nomProd = nom;
+    cantidad = cant;
+    precioCompra = pC;
+    precioVenta = pV;
+}
+
 void Producto ::setNom(string a)
 {
     this->nomProd = a;
@@ -22,66 +40,22 @@ void Producto ::setPrecioVenta(double a)
     this->precioVenta = a;
 }
 
-string Producto ::getNombre()
+string Producto ::getNombre() const
 {
     return this->nomProd;
 }
 
-int Producto ::getCant()
+int Producto ::getCant() const
 {
     return this->cantidad;
 }
 
-double Producto ::getPrecioCompra()
+double Producto ::getPrecioCompra() const
 {
     return this->precioCompra;
 }
 
-double Producto ::getPrecioVenta()
+double Producto ::getPrecioVenta() const
 {
     return this->precioVenta;
-}
-
-Producto Producto::stringToProducto(string line)
-{
-
-    //Simplificar todo esto simplemente mandando como parametro todos los elementos sacados 
-    //Campo por campo del archivo, buscar la funcion en string que reemplaze los _
-    //Limpiamos todo lo que tenga el objeto
-    nomProd = "";
-    cantidad = 0;
-    precioCompra = precioVenta = 0.0;
-    //copiamos los valores de la string en el objeto
-    int pos = 0;
-    string aux;
-    while (line[pos] != ' ')
-    {
-        if (line[pos] == '_')
-        {
-            nomProd += ' ';
-        }
-        else
-        {
-            nomProd += line[pos];
-        }
-        pos ++;
-    }
-    pos++;
-    while (line[pos] != ' ')
-    {
-        aux += line[pos];
-        pos++;
-    }
-    cantidad = stoi(aux);
-    pos++;
-    aux = "";
-    while (line[pos] != ' ')
-    {
-        aux += line[pos];
-        pos++;
-    }
-    precioCompra = stoi(aux);
-    pos++;
-    aux = "";
-
 }

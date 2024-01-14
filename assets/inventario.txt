@@ -1,1 +1,5 @@
 Galletas_de_costco 24 6 10
+Doritos 18 11.33 17
+Sabritas 3 11.33 17
+Muffins 12 16.5 20
+Boing_de_mango 8 11 17
