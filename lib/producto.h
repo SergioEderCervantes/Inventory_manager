@@ -21,6 +21,7 @@ public:
     int getCant() const;
     double getPrecioCompra() const;
     double getPrecioVenta() const;
+    string procesarCadena() const;
     ~Producto(){} 
 }; 
 

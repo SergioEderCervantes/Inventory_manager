@@ -1,5 +1,6 @@
-Galletas_de_costco 24 6 10
-Doritos 18 11.33 17
-Sabritas 3 11.33 17
-Muffins 12 16.5 20
-Boing_de_mango 8 11 17
+galleta_de costco 24 6.000000 10.000000
+doritos 32 11.330000 17.000000
+sabritas 11 11.330000 17.000000
+muffin 12 16.500000 20.000000
+boing_de mango 8 11.000000 17.000000
+churrumais 6 11.330000 13.000000

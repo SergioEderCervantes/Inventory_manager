@@ -8,15 +8,15 @@ churrumais 3 11.33 13
 ID 2
 Caja de Galletas
 1 140
-galletaCost 24 6 10
+galleta de costco 24 6 10
 
 ID 3
 Caja de muffins
 1 170
-Muffin 6 16.5 20
+muffin 6 16.5 20
 
 ID 4
-Jugos Boing
+Jugos boing
 3 280
-BoingMang 8 11.5 17
-BoingManz 8
+boing de mango 8 11.5 17
+boing de manzana 8

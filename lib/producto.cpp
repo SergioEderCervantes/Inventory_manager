@@ -59,3 +59,17 @@ double Producto ::getPrecioVenta() const
 {
     return this->precioVenta;
 }
+
+string Producto ::procesarCadena() const
+{
+    string aux = this->nomProd;
+    //Reemplazamos los espacios en blanco por guiones bajos 
+    unsigned int pos = aux.find(' ');
+    while (pos != string::npos)
+    {
+        aux.replace(pos, 1, "_");
+        pos = aux.find('_', pos + 1);
+    }
+    aux = aux + " " + to_string(this->cantidad) + " " + to_string(this->precioCompra) + " " + to_string(this->precioVenta);
+    return aux;
+}

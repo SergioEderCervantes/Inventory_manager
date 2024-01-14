@@ -20,6 +20,7 @@ void mostrarInventario();
 vector<Producto> modificarInventarioEntrada(vector<Producto>);
 // vector<Producto> modificarInventarioSalida(vector<Producto>);
 vector<Producto> cargarInventario();
+void guardarInventario(vector<Producto>);
 
 
 //Funciones para paquetes
@@ -244,16 +245,13 @@ void menuInventario()
 {
     char opcion;
     vector<Producto> inventario = cargarInventario();
-    // for (const auto& producto : inventario) {
-    //     cout << producto.getNombre() << "-" << producto.getCant() << "-" << producto.getPrecioCompra() << "-" << producto.getPrecioVenta() << endl;
-    // }
-    
     // system("pause");
     do {
         system("cls");
         cout << "\nMenu Modificar Inventario:" << endl;
         cout << "1. Modificar Inventario (Entrada)" << endl;
         cout << "2. Modificar Inventario (Salida)" << endl;
+        cout << "3. Mostrar Inventario" << endl;
         cout << "0. Salir al Menu Principal" << endl;
         cout << "Seleccione una opcion: ";
         cin >> opcion;
@@ -265,12 +263,19 @@ void menuInventario()
             case '2':
                 // modificarInventarioSalida();
                 break;
+            case '3':
+                for (const auto& producto : inventario) {
+                    cout << producto.getNombre() << "-" << producto.getCant() << "-" << producto.getPrecioCompra() << "-" << producto.getPrecioVenta() << endl;
+                }
+                break;
             case '0':
                 cout << "Volviendo al menu principal." << endl;
                 break;
             default:
                 cout << "Opcion no valida. Intentelo de nuevo." << endl;
         }
+        //guardar todos los cambios del inventario a el archivo de texto
+        guardarInventario(inventario);
         system("pause");
     } while (opcion != '0');
 }
@@ -307,6 +312,15 @@ vector<Producto> cargarInventario()
     return inv;
 }
 
+void guardarInventario(vector<Producto> inv)
+{
+    ofstream ofile(inventario);
+    for (const auto& producto : inv)
+    {
+        string line = producto.procesarCadena();
+        ofile << line << endl;
+    }
+}
 vector<Producto> modificarInventarioEntrada(vector<Producto> inventario)
 {
     ifstream ifile(paquetes);
@@ -319,7 +333,7 @@ vector<Producto> modificarInventarioEntrada(vector<Producto> inventario)
         ifile.seekg(0);
         cout << endl << "Estos son los paquetes registrados para ingresar productos al inventario: ";
         verBaseDePaquetes();
-        cout << endl << "Dame el ID del paquete que se agregara al inventario \n (Si es un nuevo producto, primero debes de agregar el paquete en la opcion de modificar paquetes)";
+        cout << endl << "Dame el ID del paquete que se agregara al inventario \n(Si es un nuevo producto, primero debes de agregar el paquete en la opcion de modificar paquetes)\nID: ";
         cin >> ID;
         aux.cargarPaquete(ID, paquetes);
         if (aux.getNombre() == "")

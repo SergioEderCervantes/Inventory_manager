@@ -86,6 +86,7 @@ void Paquete ::cargarPaquete(const string  ID,const char * paquetes)
     ifstream ifile(paquetes);
     while(getline(ifile,line))
     {
+
         if (line == ID_ABuscar) //Evalua si se encontro el paquete, en ese caso se copia todo lo de el
         {
             this->paquete_id = stoi(ID);
@@ -95,6 +96,7 @@ void Paquete ::cargarPaquete(const string  ID,const char * paquetes)
             string Pnom;
             int Pcant;
             double PpC, PpV;
+            productos = new Producto[numProductos];
             for (int i = 0; i < numProductos; i++)
             {
                 ifile >> Pnom >> Pcant >> PpC >> PpV;
