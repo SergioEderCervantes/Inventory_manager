@@ -2,8 +2,8 @@
 
 #include <iostream>
 #include <limits>
-#include "lib\paquete.cpp"
 #include <windows.h>
+#include "lib\paquete.cpp"
 using namespace std;
 
 const char* negocio = "assets/infoNeg.txt";
@@ -23,9 +23,10 @@ void mostrarInventario();
 //Funciones para paquetes
 void menuPaquetes();
 void registrarNuevoPaquete();
-// void eliminarPaquete();
-// void verBaseDePaquetes();
+void eliminarPaquete();
+void verBaseDePaquetes();
 
+//Main y menu principal
 int main()
 {
     //Bienvenida
@@ -60,28 +61,30 @@ int main()
 char menu()
 {
     char opcion;
-    cout << "Menú principal:" << endl;
+    cout << "Menu principal:" << endl;
     cout << "1. Modificar base de paquetes" << endl;
     cout << "2. Modificar inventario" << endl;
     cout << "3. Revisar inventario" << endl;
     cout << "0. Salir" << endl;
-    cout << "Seleccione una opción: ";
+    cout << "Seleccione una opcion: ";
     cin >> opcion;
 
     return opcion;
 }
 
+//funciones de paquetes
 void menuPaquetes()
 {
     char opcion;
 
     do {
-        cout << "\nMenú de paquetes:" << endl;
+        system("cls");
+        cout << "\nMenu de paquetes:" << endl;
         cout << "1. Agregar Paquete" << endl;
         cout << "2. Eliminar Paquete" << endl;
         cout << "3. Ver Base de Paquetes" << endl;
         cout << "0. Salir al menu principal" << endl;
-        cout << "Seleccione una opción: ";
+        cout << "Seleccione una opcion: ";
         cin >> opcion;
 
         switch (opcion) {
@@ -89,50 +92,19 @@ void menuPaquetes()
                 registrarNuevoPaquete();
                 break;
             case '2':
-                // eliminarPaquete();
+                eliminarPaquete();
                 break;
             case '3':
-                // verBaseDePaquetes();
+                verBaseDePaquetes();
                 break;
             case '0':
                 cout << "Saliendo del programa." << endl;
                 break;
             default:
-                cout << "Opción no válida. Inténtelo de nuevo." << endl;
+                cout << "Opcion no valida. Intentelo de nuevo." << endl;
         }
+        system("pause");
     } while (opcion != '0');
-}
-
-void menuInventario()
-{
-    char opcion;
-
-    do {
-        cout << "\nMenú Modificar Inventario:" << endl;
-        cout << "1. Modificar Inventario (Entrada)" << endl;
-        cout << "2. Modificar Inventario (Salida)" << endl;
-        cout << "0. Salir al Menú Principal" << endl;
-        cout << "Seleccione una opción: ";
-        cin >> opcion;
-
-        switch (opcion) {
-            case '1':
-                // modificarInventarioEntrada();
-                break;
-            case '2':
-                // modificarInventarioSalida();
-                break;
-            case '0':
-                cout << "Volviendo al menú principal." << endl;
-                break;
-            default:
-                cout << "Opción no válida. Inténtelo de nuevo." << endl;
-        }
-    } while (opcion != '0');
-}
-void mostrarInventario()
-{
-
 }
 
 void registrarNuevoPaquete()
@@ -217,4 +189,92 @@ void registrarNuevoPaquete()
     if (opc == '3')
         return;
 
+}
+
+void eliminarPaquete()
+{
+    int ID;
+
+    cout << endl << "Dime el ID del paquete que deseas eliminar: ";
+    cin >> ID;
+    ofstream ofile(auxiliar);
+    ifstream ifile(paquetes);
+    if (!ofile || !ifile)
+    {
+        cout << endl << "El archivo no se pudo abrir";
+        exit(1);
+    }
+    string line;
+    string ID_ABuscar = "ID " + to_string(ID);
+    bool band = true;
+    while (getline(ifile,line))
+    {
+        if (line == ID_ABuscar)
+            band = false;
+
+        if(band)
+            ofile << line << endl;
+
+        if (line.length() == 0)
+            band = true;
+    }
+    ifile.close();
+    ofile.close();
+    system("del assets\\paquetes.txt");
+    system("ren assets\\auxiliar.txt paquetes.txt");
+    
+}
+
+void verBaseDePaquetes()
+{
+    ifstream ifile(paquetes);
+    string line;
+
+    cout << endl << "Los paquetes disponibles son: ";
+    while (getline(ifile,line))
+    {
+        cout << endl << line;
+    }
+}
+
+//Funciones de inventario
+void menuInventario()
+{
+    char opcion;
+
+    do {
+        system("cls");
+        cout << "\nMenu Modificar Inventario:" << endl;
+        cout << "1. Modificar Inventario (Entrada)" << endl;
+        cout << "2. Modificar Inventario (Salida)" << endl;
+        cout << "0. Salir al Menu Principal" << endl;
+        cout << "Seleccione una opcion: ";
+        cin >> opcion;
+
+        switch (opcion) {
+            case '1':
+                // modificarInventarioEntrada();
+                break;
+            case '2':
+                // modificarInventarioSalida();
+                break;
+            case '0':
+                cout << "Volviendo al menu principal." << endl;
+                break;
+            default:
+                cout << "Opcion no valida. Intentelo de nuevo." << endl;
+        }
+        system("pause");
+    } while (opcion != '0');
+}
+void mostrarInventario()
+{
+    ifstream ifile(inventario);
+    string line;
+
+    cout << endl << "El inventario actual es: ";
+    while (getline(ifile,line))
+    {
+        cout << endl << line;
+    }
 }

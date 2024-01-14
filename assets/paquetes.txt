@@ -1,0 +1,7 @@
+ID 2
+Caja de papas
+3 340
+sabritas 5 11.33 17
+doritos 7 11.33 17
+churrumais 3 11.33 13
+
