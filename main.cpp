@@ -3,6 +3,7 @@
 #include <iostream>
 #include <limits>
 #include <windows.h>
+#include <vector>
 #include "lib\paquete.cpp"
 using namespace std;
 
@@ -18,6 +19,7 @@ void menuInventario();
 void mostrarInventario();
 // void modificarInventarioEntrada();
 // void modificarInventarioSalida();
+vector<Producto> cargarInventario();
 
 
 //Funciones para paquetes
@@ -241,7 +243,7 @@ void verBaseDePaquetes()
 void menuInventario()
 {
     char opcion;
-
+    vector<Producto> inventario = cargarInventario();
     do {
         system("cls");
         cout << "\nMenu Modificar Inventario:" << endl;
@@ -277,4 +279,22 @@ void mostrarInventario()
     {
         cout << endl << line;
     }
+}
+
+vector<Producto> cargarInventario()
+{
+    vector<Producto> inv;
+    Producto aux;
+    ifstream ifile(inventario);
+    ifile.clear();
+    ifile.seekg(0);
+    string line;
+    while (getline(ifile,line))
+    {
+        aux.stringToProducto(line);
+        inv.push_back(aux);
+    }
+    
+
+    ifile.close();
 }

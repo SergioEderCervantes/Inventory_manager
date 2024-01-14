@@ -20,7 +20,7 @@ public:
     int getCant();
     double getPrecioCompra();
     double getPrecioVenta();
-
+    Producto stringToProducto(string);
     ~Producto(){} 
 }; 
 
