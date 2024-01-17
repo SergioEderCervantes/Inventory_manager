@@ -4,6 +4,8 @@
 #include <limits>
 #include <windows.h>
 #include <vector>
+#include <cctype>
+#include <cstring>
 #include "lib\paquete.cpp"
 using namespace std;
 
@@ -18,10 +20,10 @@ char menu();
 void menuInventario();
 void mostrarInventario();
 vector<Producto> modificarInventarioEntrada(vector<Producto>);
-// vector<Producto> modificarInventarioSalida(vector<Producto>);
+vector<Producto> modificarInventarioSalida(vector<Producto>);
 vector<Producto> cargarInventario();
 void guardarInventario(vector<Producto>);
-
+// void reporteVentas(vector<Producto>);
 
 //Funciones para paquetes
 void menuPaquetes();
@@ -101,7 +103,7 @@ void menuPaquetes()
                 verBaseDePaquetes();
                 break;
             case '0':
-                cout << "Saliendo del programa." << endl;
+                cout << "Volviendo al menu principal" << endl;
                 break;
             default:
                 cout << "Opcion no valida. Intentelo de nuevo." << endl;
@@ -238,6 +240,7 @@ void verBaseDePaquetes()
     {
         cout << endl << line;
     }
+    ifile.close();
 }
 
 //Funciones de inventario
@@ -261,7 +264,7 @@ void menuInventario()
                 inventario = modificarInventarioEntrada(inventario);
                 break;
             case '2':
-                // modificarInventarioSalida();
+                inventario = modificarInventarioSalida(inventario);
                 break;
             case '3':
                 for (const auto& producto : inventario) {
@@ -367,4 +370,66 @@ vector<Producto> modificarInventarioEntrada(vector<Producto> inventario)
 
 
     return inventario;
+}
+
+vector<Producto> modificarInventarioSalida(vector<Producto> pasado) 
+{
+    //Crea un nuevo vector con el inventario actual y otro con el inventario vendido para el reporte de ventas
+    vector<Producto> actual;
+    vector<Producto> vendido;
+    for(const auto& producto : pasado)
+    {
+        NOSE:   //Esto no me convence
+        cout << endl << "Cuantos " << producto.getNombre() << " restantes hay? (Si no queda ninguno, ingresa 0)";
+        string restantes;
+        cin >> restantes;
+        bool band = true;
+        for (char c : restantes)
+        {
+            if (!isdigit(c))
+            {
+                band = false;
+                break;
+            }
+        }
+        if(!band)
+        {
+            cout << endl << "El valor ingresado no es valido, intentalo de nuevo";
+            goto NOSE;
+        }
+        else
+        {
+            int n = stoi(restantes); 
+            if (n > producto.getCant()) 
+            {
+                cout << endl << "El valor ingresado es mayor al que se tenia el registro en el inventario, \nsi es un error intente de nuevo con el valor real o si hubo un ingreso no registrado, es necesario registrarlo en entrada de inventario";
+                goto NOSE;
+            }
+            Producto auxActual(producto.getNombre(),n,producto.getPrecioCompra(),producto.getPrecioVenta());
+            Producto auxVendido(producto.getNombre(), producto.getCant()-n, producto.getPrecioCompra(),producto.getPrecioVenta());
+            
+            vendido.push_back(auxVendido);
+            if(n != 0)  //Si quedan 0 existencias del producto, no se incluye al inventario actual
+                actual.push_back(auxActual);
+
+        }
+    }
+    for (const auto& producto : actual) {
+        cout << producto.getNombre() << "-" << producto.getCant() << "-" << producto.getPrecioCompra() << "-" << producto.getPrecioVenta() << endl;
+    }
+
+    //Resumen de todo lo vendido durante la semana
+    // char resp;
+    // do
+    // {
+    //     cout << endl << "Si quieres ver el resumen de ventas de esta semana, pulsa 1, si quieres salir al menu de inventario, pulsa 2";
+    //     cin >> resp;
+    //     if (resp == '1')
+    //     {
+    //         // reporteVentas(vendido);
+    //     }
+        
+    // } while (resp != '2' && resp != '1');
+    
+    return actual;
 }

@@ -1,22 +1,17 @@
 ID 1
 Caja de Papas
 3 340
-sabritas 4 11.33 17
 doritos 7 11.33 17
 churrumais 3 11.33 13
+Sabritas 4 11.33 17
 
 ID 2
 Caja de Galletas
 1 140
-galleta de costco 24 6 10
+galletas_costco 24 6 10
 
 ID 3
-Caja de muffins
+Caja de Muffins
 1 170
-muffin 6 16.5 20
+muffin_costco 12 14.166 20
 
-ID 4
-Jugos boing
-3 280
-boing de mango 8 11.5 17
-boing de manzana 8

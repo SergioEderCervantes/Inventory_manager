@@ -84,6 +84,8 @@ void Paquete ::cargarPaquete(const string  ID,const char * paquetes)
     //Armamos la linea que se va a buscar en el archivo
     string ID_ABuscar = "ID " + ID, line;
     ifstream ifile(paquetes);
+    ifile.clear();
+    ifile.seekg(0);
     while(getline(ifile,line))
     {
 
