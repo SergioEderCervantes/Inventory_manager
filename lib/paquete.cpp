@@ -72,7 +72,7 @@ void Paquete ::guardarEnArch(const char * nomArch) const
         exit(1);
     }
     
-    ofile << "ID " << this->paquete_id << endl << this->nombre << endl << this->numProductos << " " << this->precioCompra << endl;
+    ofile << "ID " << this->paquete_id << endl << ponerGuiones(this->nombre) << endl << this->numProductos << " " << this->precioCompra << endl;
     for (int i = 0; i < this->numProductos; i++)
         ofile << productos[i].getNombre() << " " << productos[i].getCant() << " " << productos[i].getPrecioCompra() << " " << productos[i].getPrecioVenta() << endl; 
     ofile << endl;
@@ -93,7 +93,7 @@ void Paquete ::cargarPaquete(const string  ID,const char * paquetes)
         {
             this->paquete_id = stoi(ID);
             getline(ifile,line);
-            this->nombre = line;
+            this->nombre = quitarGuiones(line);
             ifile >> this->numProductos >> this->precioCompra;
             string Pnom;
             int Pcant;
@@ -113,8 +113,8 @@ void Paquete ::cargarPaquete(const string  ID,const char * paquetes)
     ifile.close();
 }
 
-bool validarNom(const Paquete& obj, const string nom)
-{
+// bool validarNom(const Paquete& obj, const string nom)
+// {
 
-    
-}
+    //No me acuerdo para que era esto xD
+// } 

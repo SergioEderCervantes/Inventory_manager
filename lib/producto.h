@@ -22,6 +22,8 @@ public:
     double getPrecioCompra() const;
     double getPrecioVenta() const;
     string procesarCadena() const;
+    friend string ponerGuiones( string);
+    friend string quitarGuiones( string);
     ~Producto(){} 
 }; 
 

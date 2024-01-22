@@ -23,7 +23,7 @@ vector<Producto> modificarInventarioEntrada(vector<Producto>);
 vector<Producto> modificarInventarioSalida(vector<Producto>);
 vector<Producto> cargarInventario();
 void guardarInventario(vector<Producto>);
-// void reporteVentas(vector<Producto>);
+void reporteVentas(vector<Producto>);
 
 //Funciones para paquetes
 void menuPaquetes();
@@ -238,7 +238,7 @@ void verBaseDePaquetes()
     cout << endl << "Los paquetes disponibles son: ";
     while (getline(ifile,line))
     {
-        cout << endl << line;
+        cout << endl << line;   //Saldran con Guiones, puedes mejorar esto
     }
     ifile.close();
 }
@@ -361,7 +361,7 @@ vector<Producto> modificarInventarioEntrada(vector<Producto> inventario)
             }   
         }
         
-        cout << endl << "Si quiere agregar mas productos al inventario, pulse 's', para salir pulse 'n'";
+        cout << endl << "Si quiere agregar mas productos al inventario, pulse 's', para salir pulse 'n'\n";
         cin >> resp;
         system("cls");
         
@@ -414,22 +414,32 @@ vector<Producto> modificarInventarioSalida(vector<Producto> pasado)
 
         }
     }
-    for (const auto& producto : actual) {
-        cout << producto.getNombre() << "-" << producto.getCant() << "-" << producto.getPrecioCompra() << "-" << producto.getPrecioVenta() << endl;
-    }
 
-    //Resumen de todo lo vendido durante la semana
-    // char resp;
-    // do
-    // {
-    //     cout << endl << "Si quieres ver el resumen de ventas de esta semana, pulsa 1, si quieres salir al menu de inventario, pulsa 2";
-    //     cin >> resp;
-    //     if (resp == '1')
-    //     {
-    //         // reporteVentas(vendido);
-    //     }
+    // Resumen de todo lo vendido durante la semana
+    char resp;
+    do
+    {
+        cout << endl << "Si quieres ver el resumen de ventas de esta semana, pulsa 1. \nSi quieres salir al menu de inventario, pulsa 2\n";
+        cin >> resp;
+        if (resp == '1')
+        {
+            reporteVentas(vendido);
+        }
         
-    // } while (resp != '2' && resp != '1');
+    } while (resp != '2' && resp != '1');
     
     return actual;
+}
+
+void reporteVentas(vector<Producto> vendido)
+{
+    cout << endl << "Durante esta semana se vendio: ";
+    double total = 0, mult;
+    for (const auto& producto : vendido)
+    {
+        mult = producto.getCant() * producto.getPrecioVenta();
+        cout << endl << producto.getCant() << " " << producto.getNombre() << " equivalente a: " << mult;
+        total += mult;
+    }
+    cout << endl << "El total vendido durante la semana fue de: " << total;
 }
